@@ -53,13 +53,12 @@ server.delete("/api/users/:id", async (req, res) => {
     try {
       const user = await userModel.findById(req.params.id);
       if (!user) {
-        return res.status(404).json({ message: "Belirtilen ID'li kullanıcı bulunamadı" });
-      }
-  
-      await userModel.deleteOne({ _id: req.params.id });
-      return res.json(user);
-    } catch (error) {
-      return res.status(500).json({ message: "Kullanıcı siinemedi" });
+       res.status(404).json({ message: "Belirtilen ID'li kullanıcı bulunamadı" });
+      }else{ 
+         await userModel.remove( req.params.id );
+          res.json(user);
+    } }catch(error) {
+      res.status(500).json({ message: "Kullanıcı siinemedi" });
     }
   });
   
